@@ -9,8 +9,10 @@ import sys
 import time
 import json
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import spotipy
 import praw
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def get_spotify_result(comment_text):
     """
@@ -73,7 +75,7 @@ def main():
                 if comment_id not in SPOTIFIED_POSTS:
                     reply = get_spotify_result(comment_text)
                     SPOTIFIED_POSTS.append(comment_id)
-                    disclaimer = "I'm a bot bleep bloop and I'm still in beta. \
+                    disclaimer = "I'm a bot bleep bloop. \
                     \n\nPM me for more information or to report any issues."
                     submission.reply('{0}\n\n\n{1}'.format(reply, disclaimer))
                     print('Replied to {0} \n{1}'.format(comment_id, reply))
